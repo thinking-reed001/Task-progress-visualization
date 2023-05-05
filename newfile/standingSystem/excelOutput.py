@@ -1,10 +1,14 @@
-import pandas as pd
+'''
+将文件运行在安装了python的文件夹下，例如C:\Users\Administrator\AppData\Local\Programs\Python\Python310\newfile\standingSystem
+当前功能：读取excel 生产chart图表
+'''
+import openpy
 import pyecharts.options as opts
 from pyecharts.charts import Gauge, Bar
 
 
 #指定区间内容
-file_path =r"C:\Users\Administrator\AppData\Local\Programs\Python\Python310\newfile\standingSystem\excel\Total.xlsx"
+file_path =r"C:\Users\Administrator\AppData\Local\Programs\Python\Python310\newfile\standingSystem\excel\Total.xlsx"  #python会把\当做转义符，所以需要r说明
 sheet_name1 = "Sheet1"
 df1 = pd.read_excel(file_path,sheet_name=sheet_name1) #读取Sheet1
 
