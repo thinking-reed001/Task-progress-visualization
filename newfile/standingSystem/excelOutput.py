@@ -4,7 +4,7 @@ from pyecharts.charts import Gauge, Bar
 
 
 #指定区间内容
-file_path ="newfile\standingSystem\excel\Total.xlsx"
+file_path =r"C:\Users\Administrator\AppData\Local\Programs\Python\Python310\newfile\standingSystem\excel\Total.xlsx"
 sheet_name1 = "Sheet1"
 df1 = pd.read_excel(file_path,sheet_name=sheet_name1) #读取Sheet1
 
@@ -57,7 +57,7 @@ chart3.set_global_opts(
 chart3.add_yaxis('静态检查', jingtai_list ,itemstyle_opts={'color':'yellow'}) 
 chart3.add_yaxis('排水沟清理', paishui_list ,itemstyle_opts={'color':'red'}) 
 chart3.add_yaxis('桥涵检查', qiaohan_list ,itemstyle_opts={'color':'green'}) 
-chart3.render("newfile\standingSystem\html\区间完成度.html")
+chart3.render(r"C:\Users\Administrator\AppData\Local\Programs\Python\Python310\newfile\standingSystem\html\区间完成度.html")
 
 
 
@@ -80,7 +80,7 @@ chart4.set_global_opts(
     )
 )
 chart4.add_yaxis('整月进度', heji_tag2) 
-chart4.render("newfile\standingSystem\html\整数完成度.html")
+chart4.render(r"C:\Users\Administrator\AppData\Local\Programs\Python\Python310\newfile\standingSystem\html\整数完成度.html")
 
 #读取表3
 sheet_name3 = "Sheet3"
@@ -88,6 +88,7 @@ df3 = pd.read_excel(file_path,sheet_name=sheet_name3) #读取Sheet1
 #读取正矢总量
 quxian_total = df3.iloc[0,1]  #读取正矢总量的字符串 
 quxian_total = quxian_total.replace("，",",")  #将所有中文逗号变成英文格式
+quxian_total = quxian_total.replace("、",",")  
 quxian_total = quxian_total.replace("k","K")  #统一k格式
 quxian_total = [item.strip() for item in quxian_total.split(",")]  #列表推导式删除空格、以英文逗号隔开
 
@@ -125,12 +126,13 @@ chart0.set_global_opts(
         )
     )
 )
-chart0.render("newfile\standingSystem\html\正矢检查完成度.html")
+chart0.render(r"C:\Users\Administrator\AppData\Local\Programs\Python\Python310\newfile\standingSystem\html\正矢检查完成度.html")
 
 
 #读取附带曲线总量
 fudai_total = df3.iloc[1,1]  #读取附带曲线总量的字符串 
 fudai_total = fudai_total.replace("，",",")  #将所有中文逗号变成英文格式
+fudai_total = fudai_total.replace("、",",")
 fudai_total = [item.strip() for item in fudai_total.split(",")]  #列表推导式删除空格、以英文逗号隔开
 #读取附带曲线检查流
 fudai_jindu = df3.iloc[1,2:34] #为附带检查行的series数据类型
@@ -163,7 +165,7 @@ chart1.set_global_opts(
         )
     )
 )
-chart1.render("newfile\standingSystem\html\附带曲线检查完成度.html")
+chart1.render(r"C:\Users\Administrator\AppData\Local\Programs\Python\Python310\newfile\standingSystem\html\附带曲线检查完成度.html")
 
 
 
@@ -177,6 +179,7 @@ daocha_jindu = list(daocha_jindu)
 daocha_jindu_out =[]  #创建一个统计实际道岔检查条数的列表
 for i in range(len(daocha_jindu)):   #遍历每日实际检查列表
     if(type(daocha_jindu[i]) == str  ):  #判断第i项是否是字符串类型
+        daocha_jindu[i] = daocha_jindu[i].replace("、",",")
         daocha_jindu[i] = daocha_jindu[i].replace("，",",")  #有，的话将所有中文逗号变成英文格式
         daocha_jindu[i] = daocha_jindu[i].split(',') #按照str里的英逗号分隔
         daocha_jindu[i] = [x.strip() for x in daocha_jindu[i] if x.strip()]  #列表推导式删除空格
@@ -201,4 +204,4 @@ chart2.set_global_opts(
         )
     )
 )
-chart2.render("newfile\standingSystem\html\道岔检查完成度.html")
+chart2.render(r"C:\Users\Administrator\AppData\Local\Programs\Python\Python310\newfile\standingSystem\html\道岔检查完成度.html")
