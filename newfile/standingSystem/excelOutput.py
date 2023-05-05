@@ -2,7 +2,7 @@
 将文件运行在安装了python的文件夹下，例如C:\Users\Administrator\AppData\Local\Programs\Python\Python310\newfile\standingSystem
 当前功能：读取excel 生产chart图表
 '''
-import openpy
+import openpyxl
 import pyecharts.options as opts
 from pyecharts.charts import Gauge, Bar
 
