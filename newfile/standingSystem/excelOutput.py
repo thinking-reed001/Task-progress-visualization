@@ -1,26 +1,27 @@
-'''
-将文件运行在安装了python的文件夹下，例如C:\Users\Administrator\AppData\Local\Programs\Python\Python310\newfile\standingSystem
-当前功能：读取excel 生产chart图表
-'''
+import os
+import pandas as pd
 import openpyxl
 import pyecharts.options as opts
 from pyecharts.charts import Gauge, Bar
+from datafile import file_path,file_path_last
 
+#file1 与file2是为了自动生成周报和旬报设计的
+# 读取第一个xlsx文件
+file1 = pd.read_excel(file_path, sheet_name=None)
+# 读取第二个xlsx文件
+file2 = pd.read_excel(file_path_last, sheet_name=None)
 
-#指定区间内容
-file_path =r"C:\Users\Administrator\AppData\Local\Programs\Python\Python310\newfile\standingSystem\excel\Total.xlsx"  #python会把\当做转义符，所以需要r说明
+#df1是为了生成网页设计的
 sheet_name1 = "Sheet1"
 df1 = pd.read_excel(file_path,sheet_name=sheet_name1) #读取Sheet1
-
 qujian_list =df1['线路区间'].tolist() 
 changdu_list =df1['长度\日期'].tolist()
 heji_tag = df1['合计'].tolist()
 
-
 jingtai_list =[0]*len(qujian_list) #1
 paishui_list =[0]*len(qujian_list) #3
 qiaohan_list =[0]*len(qujian_list) #5
-for i in range(len(heji_tag)):
+for i in range(len(heji_tag)):    #heji_tag是最后一行的合计列表
     if(heji_tag[i] == 9): #1+3+5
         jingtai_list[i] = 1
         paishui_list[i] = 1
@@ -33,7 +34,7 @@ for i in range(len(heji_tag)):
         qiaohan_list[i] = 1
     elif(heji_tag[i] == 5): #5 
         qiaohan_list[i] = 1
-    elif(heji_tag[i] == 4): #5
+    elif(heji_tag[i] == 4): #4
         paishui_list[i] = 1
         jingtai_list[i] = 1
     elif(heji_tag[i] == 3): #3
@@ -49,6 +50,7 @@ chart3 = Bar()
 chart3.add_xaxis(qujian_list) 
 #横坐标参数
 chart3.set_global_opts(
+    title_opts=opts.TitleOpts(title="区间完成度"),
     xaxis_opts=opts.AxisOpts(
         axislabel_opts=opts.LabelOpts(
             interval=0, # 设置坐标轴刻度的显示间隔，0为全部显示
@@ -61,7 +63,7 @@ chart3.set_global_opts(
 chart3.add_yaxis('静态检查', jingtai_list ,itemstyle_opts={'color':'yellow'}) 
 chart3.add_yaxis('排水沟清理', paishui_list ,itemstyle_opts={'color':'red'}) 
 chart3.add_yaxis('桥涵检查', qiaohan_list ,itemstyle_opts={'color':'green'}) 
-chart3.render(r"C:\Users\Administrator\AppData\Local\Programs\Python\Python310\newfile\standingSystem\html\区间完成度.html")
+chart3.render(r"Task-progress-visualization-main\newfile\standingSystem\html\区间完成度.html", page_title="区间完成度")
 
 
 
@@ -75,6 +77,7 @@ heji_tag2 = df2['合计'].tolist()
 chart4 = Bar() 
 chart4.add_xaxis(zhengshu_list) 
 chart4.set_global_opts(
+    title_opts=opts.TitleOpts(title="整数完成度"),
     xaxis_opts=opts.AxisOpts(
         axislabel_opts=opts.LabelOpts(
             interval=0, # 设置坐标轴刻度的显示间隔，0为全部显示
@@ -84,7 +87,7 @@ chart4.set_global_opts(
     )
 )
 chart4.add_yaxis('整月进度', heji_tag2) 
-chart4.render(r"C:\Users\Administrator\AppData\Local\Programs\Python\Python310\newfile\standingSystem\html\整数完成度.html")
+chart4.render(r"Task-progress-visualization-main\newfile\standingSystem\html\整数完成度.html", page_title="整数完成度")
 
 #读取表3
 sheet_name3 = "Sheet3"
@@ -124,13 +127,14 @@ chart0 = Bar()
 chart0.add_xaxis(quxian_total) 
 chart0.add_yaxis('曲线正矢检查完成度', zhengshi_barvalue) 
 chart0.set_global_opts(
+    title_opts=opts.TitleOpts(title="正矢检查完成度"),
     yaxis_opts=opts.AxisOpts(
         axislabel_opts=opts.LabelOpts(
             formatter="{value}%"
         )
     )
 )
-chart0.render(r"C:\Users\Administrator\AppData\Local\Programs\Python\Python310\newfile\standingSystem\html\正矢检查完成度.html")
+chart0.render(r"Task-progress-visualization-main\newfile\standingSystem\html\正矢检查完成度.html", page_title="正矢检查完成度")
 
 
 #读取附带曲线总量
@@ -163,13 +167,14 @@ chart1 = Bar()
 chart1.add_xaxis(fudai_total) 
 chart1.add_yaxis('附带曲线检查完成度', fudai_barvalue) 
 chart1.set_global_opts(
+    title_opts=opts.TitleOpts(title="附带曲线检查完成度"),
     yaxis_opts=opts.AxisOpts(
         axislabel_opts=opts.LabelOpts(
             formatter="{value}%"
         )
     )
 )
-chart1.render(r"C:\Users\Administrator\AppData\Local\Programs\Python\Python310\newfile\standingSystem\html\附带曲线检查完成度.html")
+chart1.render(r"Task-progress-visualization-main\newfile\standingSystem\html\附带曲线检查完成度.html",page_title="附带曲线检查完成度")
 
 
 
@@ -202,10 +207,69 @@ chart2 = Bar()
 chart2.add_xaxis(daocha_total) 
 chart2.add_yaxis('道岔检查完成度', daocha_barvalue) 
 chart2.set_global_opts(
+    title_opts=opts.TitleOpts(title="道岔检查完成度"),
     yaxis_opts=opts.AxisOpts(
         axislabel_opts=opts.LabelOpts(
             formatter="{value}%"
         )
     )
 )
-chart2.render(r"C:\Users\Administrator\AppData\Local\Programs\Python\Python310\newfile\standingSystem\html\道岔检查完成度.html")
+chart2.render(r"Task-progress-visualization-main\newfile\standingSystem\html\道岔检查完成度.html", page_title="道岔检查完成度")
+
+
+
+
+
+# 运行html_title_named文件，这是不用在开头import的方法
+with open(r"Task-progress-visualization-main\newfile\standingSystem\html_title_named.py", 'r', encoding='utf-8') as f:
+    code = compile(f.read(), r"Task-progress-visualization-main\newfile\standingSystem\html_title_named.py", 'exec')
+    exec(code)
+
+
+
+
+
+
+#做周报、做旬报
+print("尊敬的主人，今天是否做周报或旬报\n如果是，按下y键；\n如果不做,按任意键，不要按电源哦")
+just_date = input()
+if ((just_date == "y")|(just_date == "Y")):
+    print("从何时算起，例如2023年1月24号则输入：24")
+    start_day = input()
+    start_day = int(start_day) #变成整数型
+    print("以何时结束，例如2023年2月3号则输入：3")
+    end_day = input()
+    end_day = int(end_day)  #变成整数型
+    if(end_day < start_day):   #有上个月的内容的情况
+        print('执行跨月合并...')
+        output_path = r'Task-progress-visualization-main\newfile\standingSystem\xunANDzhou\生成的旬周报（跨月）.xlsx'
+        data = {}
+        for name, sheet1 in file1.items():
+            if name in file2:
+                sheet2 = file2[name]
+                data[name] = pd.concat(
+                    [sheet1.iloc[:,0:2],sheet1.iloc[:, start_day+1:33], sheet2.iloc[:, 2:end_day+2]], axis=1
+                )
+        # 将提取出的数据存储为新的 xlsx 文件
+        with pd.ExcelWriter(output_path) as writer:
+            for name, df in data.items():
+                df.to_excel(writer, index=False, sheet_name=name)
+        print("需要跨月合并的报文已生成，快去xunANDzhou文件夹下看看吧")                  
+    elif(end_day > start_day):  #只是本月的内容的情况
+        print('不需要跨月合并...')
+        output1_path = r'Task-progress-visualization-main/newfile/standingSystem/xunANDzhou/生成的旬周报（不跨月）.xlsx'
+        # 遍历所有表格，提取第一行标签为a的列至第一行标签为b的列的数据
+        data = {}
+        for name, sheet1 in file1.items():
+                data[name] = pd.concat(
+                    [sheet1.iloc[:,0:2],sheet1.iloc[:, start_day+1:end_day+2]], axis=1
+                )
+        # 将提取出的数据存储为新的 xlsx 文件
+        with pd.ExcelWriter(output1_path) as writer:      
+            for name, df in data.items():
+                df.to_excel(writer, index=False, sheet_name=name) 
+        print("无需跨月合并的报文已生成，快去xunANDzhou文件夹下看看吧")    
+elif((just_date != "y")|(just_date != "Y")):
+    print("再见")
+ 
+ 
