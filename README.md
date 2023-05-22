@@ -9,4 +9,5 @@ python环境、需要安装pyecharts、openpyxl库
 
 ## 完成功能
 读取excel表，根据数据类型生成进度网页图表
+通过交互，自动生成指定时间内的周报
 
