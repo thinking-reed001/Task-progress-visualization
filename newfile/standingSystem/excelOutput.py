@@ -116,7 +116,7 @@ for i in range(len(quxian_jindu)):   #遍历整个列表
             for j in range(len(a)):
                 quxian_jindu_out.append(a[j])  
 #创建纵坐标               
-zhengshi_barvalue =[0,0,0,0,0] 
+zhengshi_barvalue =[0]*len(quxian_total) 
 for i in range(len(quxian_jindu_out)):    #遍历完成列表
     for j in range(len(quxian_total)):    #用总列表逐个匹配
         if(quxian_jindu_out[i] == quxian_total[j]):
@@ -156,7 +156,7 @@ for i in range(len(fudai_jindu)):   #遍历每日实际检查列表
             for j in range(len(a)):
                 fudai_jindu_out.append(a[j])  
 #创建纵坐标               
-fudai_barvalue =[0,0,0,0,0] 
+fudai_barvalue =[0]*len(fudai_total)
 for i in range(len(fudai_jindu_out)):    #遍历完成列表
     for j in range(len(fudai_total)):    #用总列表逐个匹配
         if(fudai_jindu_out[i] == fudai_total[j]):
@@ -231,7 +231,7 @@ with open(r"Task-progress-visualization-main\newfile\standingSystem\html_title_n
 
 
 #做周报、做旬报
-print("尊敬的主人，今天是否做周报或旬报\n如果是，按下y键；\n如果不做,按任意键，不要按电源哦")
+print("尊敬的主人，今天是否做周报或旬报\n如果是，按下Y键；\n如果不做,按任意键，不要按电源哦")
 just_date = input()
 if ((just_date == "y")|(just_date == "Y")):
     print("从何时算起，例如2023年1月24号则输入：24")
