@@ -132,7 +132,8 @@ chart0.set_global_opts(
         axislabel_opts=opts.LabelOpts(
             formatter="{value}%"
         )
-    )
+    ),
+    datazoom_opts=[opts.DataZoomOpts()]
 )
 chart0.render(r"Task-progress-visualization-main\newfile\standingSystem\html\正矢检查完成度.html", page_title="正矢检查完成度")
 
