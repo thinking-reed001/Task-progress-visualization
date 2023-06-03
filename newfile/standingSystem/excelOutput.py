@@ -62,7 +62,7 @@ chart3.set_global_opts(
 
 chart3.add_yaxis('静态检查', jingtai_list ,itemstyle_opts={'color':'yellow'}) 
 chart3.add_yaxis('排水沟清理', paishui_list ,itemstyle_opts={'color':'red'}) 
-chart3.add_yaxis('桥涵检查', qiaohan_list ,itemstyle_opts={'color':'green'}) 
+chart3.add_yaxis('桥涵检查/其他项目', qiaohan_list ,itemstyle_opts={'color':'green'}) 
 chart3.render(r"Task-progress-visualization-main\newfile\standingSystem\html\区间完成度.html", page_title="区间完成度")
 
 
@@ -249,8 +249,8 @@ if ((just_date == "y")|(just_date == "Y")):
             if name in file2:
                 sheet2 = file2[name]
                 data[name] = pd.concat(
-                    [sheet1.iloc[:,0:2],sheet1.iloc[:, start_day+1:33], sheet2.iloc[:, 2:end_day+2]], axis=1
-                )
+                    [sheet1.iloc[:,0:2],sheet2.iloc[:, start_day+1:33], sheet1.iloc[:, 2:end_day+2]], axis=1
+                ) #sheet1作为当前月份的表格，sheet2作为上一月份表格
         # 将提取出的数据存储为新的 xlsx 文件
         with pd.ExcelWriter(output_path) as writer:
             for name, df in data.items():
@@ -269,7 +269,9 @@ if ((just_date == "y")|(just_date == "Y")):
         with pd.ExcelWriter(output1_path) as writer:      
             for name, df in data.items():
                 df.to_excel(writer, index=False, sheet_name=name) 
-        print("无需跨月合并的报文已生成，快去xunANDzhou文件夹下看看吧")    
+        print("无需跨月合并的报文已生成，快去xunANDzhou文件夹下看看吧") 
+    else:
+        print("您的输入不符合规范，再见")
 elif((just_date != "y")|(just_date != "Y")):
     print("再见")
  
