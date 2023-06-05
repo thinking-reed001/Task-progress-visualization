@@ -11,7 +11,7 @@ python环境、需要安装pyecharts、openpyxl、bs4、pandas、numpy库
 读取excel表，根据数据类型生成进度网页图表
 通过交互，自动生成指定时间内的周报
 
-##注意事项
+## 注意事项
 发生过一次异常，即图表在edge、chrome中不显示
 原因：在internet连接中中使用代理。
 解决方法：cmd-inetcpl.cpl-连接-取消勾选-终端exit退出
